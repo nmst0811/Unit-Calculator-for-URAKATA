@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QStatusBar, QWidget, QVBoxLayout, QHBoxLayout
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QStatusBar, QWidget, QVBoxLayout, QHBoxLayout, QComboBox
 
 # PySide6.QtWidgets.MainWindow を継承した MainWindow クラスの定義
 class MainWindow(QMainWindow):
@@ -53,6 +53,41 @@ class MainWindow(QMainWindow):
         self.setStatusBar(self.sb_status)
         self.sb_status.setSizeGripEnabled(False)
         self.sb_status.showMessage('プログラムを起動しました。')
+
+        # コンボボックスを表示するメソッド
+        self.SetCombobox()
+
+    # コンボボックスは別のメソッドに分けました
+    def SetCombobox(self):
+        # コンボボックスを使うことを宣言
+        self.combobox = QComboBox(self)
+
+        # コンボボックスの入力を無効
+        self.combobox.setEditable(False)
+
+        # 追加順にIDが0から割り振られる
+        self.combobox.addItem("メートル[cm]")         # ID: 0
+        self.combobox.addItem("ミリ[mm]")                 # ID: 1
+        self.combobox.addItem("センチ[cm]")   # ID: 2
+        self.combobox.addItem("キロ[km]")     # ID: 3
+        self.combobox.addItem("インチ[in]")         # ID: 4
+        self.combobox.addItem("フィート[ft]")
+        self.combobox.addItem("ヤード[yd]")
+        self.combobox.addItem("すん[寸]")
+        self.combobox.addItem("しゃく[尺]")
+        self.combobox.addItem("けん[間]")
+        self.combobox.addItem("り[里]")
+        self.combobox.addItem("こうねん[光年]")
+        self.combobox.addItem("かいり[海里]")
+
+        # コンボボックスの選択中のIDが変更されたら呼び出す処理
+        self.combobox.currentIndexChanged.connect(
+            self.CallbackCurrentindexchangedCombobox)
+
+    # コンボボックスの選択中のIDが変更されたら実行する処理
+    def CallbackCurrentindexchangedCombobox(self):
+        print(self.combobox.currentIndex())  # 選択中のIDを表示
+        print(self.combobox.currentText())  # 選択中の文字列を表示
 
 # 本体
 if __name__ == '__main__':
